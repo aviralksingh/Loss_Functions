@@ -54,7 +54,25 @@ cs_classes = [
 train_id_to_color = [c.color for c in cs_classes if (c.train_id != -1 and c.train_id != 255)]
 train_id_to_color = np.array(train_id_to_color)
 
+def color_to_label_image(color_image,train_id_to_color):
+    # Create a lookup dictionary for color to label id
+    color_dict = {tuple(color): index for index, color in enumerate(train_id_to_color)}
 
+    # Get image dimensions
+    h, w, _ = color_image.shape
+
+    # Create an empty single-channel image to store the label ids
+    label_image = np.zeros((h, w), dtype=np.uint8)
+
+    # Iterate through the dictionary and assign label ids
+    for color, label_id in color_dict.items():
+        # Create a boolean mask for pixels matching the current color
+        mask = np.all(color_image == color, axis=-1)
+
+        # Assign label_id to the masked pixels in label_image
+        label_image[mask] = label_id
+
+    return label_image
 
 #####################################
 ### CITYSCAPES DATASET CLASS DEFINITION ##
