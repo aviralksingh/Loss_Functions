@@ -85,7 +85,8 @@ class cityScapeDataset(Dataset):
 
     def __getitem__(self, index):
         # read source image and convert to RGB, apply transform
-        sourceImage = cv2.imread(self.sourceImagePath, -1)
+        sourceImagePath = self.sourceImgFiles[index]
+        sourceImage = cv2.imread(sourceImagePath, -1)
         sourceImage = cv2.cvtColor(sourceImage, cv2.COLOR_BGR2RGB)
         if self.transform is not None:
             sourceImage = self.transform(sourceImage)

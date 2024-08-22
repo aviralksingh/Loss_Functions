@@ -5,6 +5,23 @@ import cv2
 from einops import rearrange
 
 from segformer import *
+
+import subprocess
+import os
+
+# Example output filename and Dropbox link
+output_file = "segformer_mit_b3_cs_pretrain_19CLS_512_1024_CE_loss.pt"
+dropbox_link = "https://www.dropbox.com/scl/fi/2dxmutttgtuc0qjcfbmhv/segformer_mit_b3_cs_pretrain_19CLS_512_1024_CE_loss.pt?rlkey=zeqo30tiqdve1bcbt3bzux3ru&st=team4tl1&dl=1"
+
+# Check if the file already exists locally
+if os.path.exists(output_file):
+    print(f"File '{output_file}' already exists. Skipping download.")
+else:
+    print(f"File '{output_file}' not found. Downloading...")
+    # Run the wget command to download the file
+    subprocess.run(["wget", "-O", output_file, dropbox_link])
+
+
 NUM_CLASSES = 19
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 model = segformer_mit_b3(in_channels=3, num_classes=NUM_CLASSES).to(device)
