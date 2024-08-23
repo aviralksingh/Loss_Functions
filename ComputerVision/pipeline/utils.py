@@ -113,7 +113,7 @@ class cityScapeDataset(Dataset):
         labelImage = cv2.imread(self.labelImgFiles[index], -1)
         labelImage[labelImage == 255] = 19
         labelImage = torch.from_numpy(labelImage).long()
-        return sourceImage, labelImage
+        return sourceImage, labelImage ,sourceImagePath
 
 
 ###################################
