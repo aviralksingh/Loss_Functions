@@ -62,7 +62,6 @@ pt_image = pt_image.to(device)
 y_pred = torch.argmax(model(pt_image.unsqueeze(0)), dim=1).squeeze(0)
 predicted_labels = y_pred.cpu().detach().numpy()
 # predicted_labels[(predicted_labels < 11) & (predicted_labels != 0) & (predicted_labels != 6) & (predicted_labels != 7)] = 1
-
 # convert to corresponding color
 cm_labels = (train_id_to_color[predicted_labels]).astype(np.uint8)
 # overlay prediction over input frame
@@ -70,6 +69,6 @@ alpha=0.7
 overlay_image = cv2.addWeighted(sample_image, 1, cm_labels, alpha, 0)
 overlay_image = cv2.cvtColor(overlay_image, cv2.COLOR_RGB2BGR)
 predicted_output = cv2.cvtColor(cm_labels, cv2.COLOR_RGB2BGR)
-cv2.imwrite("output.png", predicted_output)
+cv2.imwrite("output.png", predicted_labels)
 
 
